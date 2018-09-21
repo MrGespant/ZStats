@@ -19,9 +19,12 @@ try:
     cursor.execute('''CREATE TABLE IF NOT EXISTS stories(id INTEGER PRIMARY KEY,sum INTEGER)''')
     db.commit()
 
-    cursor.execute('''INSERT INTO stories(sum) VALUES(?)''', sheet.nrows)
+    cursor.execute('''INSERT INTO stories(sum) VALUES(?)''', (sheet.nrows,))
     db.commit()
 
+    cursor.execute('''SELECT id, sum FROM stories''')
+    for row in cursor:
+        print('{0} : {1}'.format(row[0], row[1]))
 except Exception as e:
     db.rollback()
     raise e

@@ -1,6 +1,7 @@
 # This script should parse given XLS file and fill the database with included data
 #
 #
+from sqlite3.dbapi2 import Connection
 
 import xlrd
 import sqlite3
@@ -24,7 +25,7 @@ sheet = xlrd.open_workbook(path).sheet_by_index(0)
 # TODO projit soubor a ulozit data jednotlivych pribehu
 
 try:
-    db = sqlite3.connect("./data.db")
+    db: Connection = sqlite3.connect("./data.db")
     # TODO ukladat databazi na Drive
     cursor = db.cursor()
 

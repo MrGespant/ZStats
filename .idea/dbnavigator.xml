@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DataExportManager">
@@ -31,11 +31,34 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="fb129aa8-d100-4689-abc7-38275672e9ee">
-      <console name="ZStats database" type="STANDARD" />
+      <console name="ZStats database" type="STANDARD"><![CDATA[select
+    s.amount,
+    s.date_next_payment,
+    s.date_secondary_bought,
+    s.date_secondary_sold_date,
+    s.date_start,
+    s.fee,
+    s.full_payment,
+    s.id,
+    s.installments,
+    s.installments_when_bought,
+    s.insurance,
+    s.interest_rate,
+    s.my_payment,
+    s.name,
+    s.postponed,
+    s.rating,
+    s.status,
+    s.user_id
+from
+    stories s;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="fb129aa8-d100-4689-abc7-38275672e9ee" />
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-list connection-id="fb129aa8-d100-4689-abc7-38275672e9ee" dataset="main.stories" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -78,7 +101,7 @@
           <port value="" />
           <database value="" />
           <files>
-            <file path="G:\Můj disk\PyCharm Projects\ZStats\resources\data.db" schema="main" />
+            <file path="G:\My Drive\PyCharm Projects\ZStats\resources\secrets\data.db" schema="main" />
           </files>
           <os-authentication value="false" />
           <empty-password value="false" />

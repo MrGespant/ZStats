@@ -1,26 +1,32 @@
 # This script should parse given XLS file and fill the database with included data
 #
 #
-from sqlite3.dbapi2 import Connection
 
 import xlrd
-import sqlite3
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
+import dbscripts
+from resources.secrets import config
+from os import listdir
 
-# you have to get client_secrets.json file from Google API Console and save it in root
-gauth = GoogleAuth()
-gauth.LocalWebserverAuth()
+database = dbscripts.db_init()
 
-drive = GoogleDrive(gauth)
+for file in listdir(config.files_dir):
+    # store import file information
+    insertFileQuery = f"""INSERT INTO files (filename, date_processed) 
+                          VALUES ("{file}", "{file[23:-4]}")"""
+    dbscripts.db_query(database, insertFileQuery)
 
-file1 = drive.CreateFile({'title': 'Hello.txt'})
-file1.SetContentString('Hello')
-file1.Upload()
+    sheet = xlrd.open_workbook(config.files_dir+file).sheet_by_index(0)
+    if file == 'investice-TomasMeisner-2018-08-07.xls':
+        for row in range(3, sheet.nrows):
+            insertStoryQuery = f"""INSERT INTO stories 
+            (amount, date_next_payment, date_secondary_bought, date_secondary_sold_date, date_start, fee) 
+                               VALUES ({sheet.cell_value(row, 5)}, "{sheet.cell_value(row, 29)}", "{sheet.cell_value(row, 29)}", "{sheet.cell_value(row, 29)}", "{sheet.cell_value(row, 29)}", {sheet.cell_value(row, 25)})"""
+            print(insertStoryQuery)
+            dbscripts.db_query(database, insertStoryQuery)
 
-path = "./files/investice-TomasMeisner-2018-09-21.xls"
-# TODO soubor jako vstupni parametr
+#TODO: Insert date in proper format
 
-sheet = xlrd.open_workbook(path).sheet_by_index(0)
-# TODO projit soubor a ulozit data jednotlivych pribehu
+database.close()
 
+
+# amount, date_next_payment, date_secondary_bought, date_secondary_sold_date, date_start, fee, full_payment, installments, installments_when_bought, insurance, interest_rate, my_payment, name, postponed, rating, status, user_id

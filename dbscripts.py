@@ -20,7 +20,6 @@ def db_init():
 
     try:
         db: Connection = sqlite3.connect(config.db_database_location)
-        # TODO ukladat databazi na Drive
     except Exception as e:
         print("DB not connected")
         raise e
@@ -69,8 +68,7 @@ def db_query(db, script):
         raise e
 
 
-database = db_init()
-db_query(database, db_script_open(config.db_create_script))
-db_query(database, insert)
-database.close()
-
+def db_create():
+    database = db_init()
+    db_query(database, db_script_open(config.db_create_script))
+    database.close()

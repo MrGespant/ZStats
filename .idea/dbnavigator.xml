@@ -31,27 +31,9 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="fb129aa8-d100-4689-abc7-38275672e9ee">
-      <console name="ZStats database" type="STANDARD"><![CDATA[select
-    s.amount,
-    s.date_next_payment,
-    s.date_secondary_bought,
-    s.date_secondary_sold_date,
-    s.date_start,
-    s.fee,
-    s.full_payment,
-    s.id,
-    s.installments,
-    s.installments_when_bought,
-    s.insurance,
-    s.interest_rate,
-    s.my_payment,
-    s.name,
-    s.postponed,
-    s.rating,
-    s.status,
-    s.user_id
-from
-    stories s;]]></console>
+      <console name="ZStats database" type="STANDARD"><![CDATA[SELECT * FROM files ORDER BY date_processed ASC
+
+SELECT * FROM stories]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
@@ -59,6 +41,7 @@ from
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-list connection-id="fb129aa8-d100-4689-abc7-38275672e9ee" dataset="main.stories" active-filter-id="" />
+    <filter-list connection-id="fb129aa8-d100-4689-abc7-38275672e9ee" dataset="main.files" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />

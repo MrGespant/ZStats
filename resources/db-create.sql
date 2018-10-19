@@ -3,10 +3,10 @@ CREATE TABLE IF NOT EXISTS stories(
     user_id integer,
     name varchar(50),
     status varchar(20),
-    date_start date,
-    date_next_payment date,
-    date_secondary_bought date,
-    date_secondary_sold_date date,
+    date_start real,
+    date_next_payment real,
+    date_secondary_bought real,
+    date_secondary_sold_date real,
     amount integer,
     full_payment float,
     my_payment float,
@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS stories(
 CREATE TABLE IF NOT EXISTS history(
     id integer PRIMARY KEY,
     story_id integer,
+    date_transaction real,
     remaining_installments integer,
     paid_installments integer,
     original_investment float,
@@ -35,4 +36,9 @@ CREATE TABLE IF NOT EXISTS history(
     interest_remaining float,
     interest_late float,
     penalty float
+);
+CREATE TABLE IF NOT EXISTS files(
+    id integer PRIMARY KEY,
+    filename varchar(50),
+    date_processed text
 )

@@ -25,7 +25,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="fb129aa8-d100-4689-abc7-38275672e9ee">
-        <schema name="main" object-types="column, constraint, index, table, dataset trigger, view" />
+        <schema name="main" object-types="column, index, table, view" />
       </connection>
     </loaded-nodes>
   </component>
@@ -33,7 +33,9 @@
     <connection id="fb129aa8-d100-4689-abc7-38275672e9ee">
       <console name="ZStats database" type="STANDARD"><![CDATA[SELECT * FROM files ORDER BY date_processed ASC
 
-SELECT * FROM stories]]></console>
+SELECT * FROM stories
+
+DELETE FROM stories]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
@@ -84,7 +86,7 @@ SELECT * FROM stories]]></console>
           <port value="" />
           <database value="" />
           <files>
-            <file path="G:\My Drive\PyCharm Projects\ZStats\resources\secrets\data.db" schema="main" />
+            <file path="G:\Můj disk\PyCharm Projects\ZStats\resources\secrets\data.db" schema="main" />
           </files>
           <os-authentication value="false" />
           <empty-password value="false" />

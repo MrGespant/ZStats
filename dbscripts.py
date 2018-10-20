@@ -11,7 +11,7 @@ def db_init():
     #
 
     try:
-        db: Connection = sqlite3.connect(config.db_database_location)
+        db: Connection = sqlite3.connect(config.db_database_location, timeout=10)
     except Exception as e:
         print("DB not connected")
         raise e
@@ -51,12 +51,11 @@ def db_query(db, script):
         except Exception as e:
             raise e
 
-    print("Script executed")
     try:
         db.commit()
     except Exception as e:
         db.rollback()
-        print("Script rolled back")
+        print("Script " + command + "rolled back")
         raise e
     return results
 

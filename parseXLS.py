@@ -9,7 +9,6 @@ from os import listdir
 
 database = dbscripts.db_init()
 processedFiles = dbscripts.db_query(database, "SELECT filename FROM files")
-processedStories = dbscripts.db_query(database, "SELECT id FROM stories")
 
 
 for file in listdir(config.files_dir):
@@ -25,7 +24,11 @@ for file in listdir(config.files_dir):
     dbscripts.db_query(database, insertFileQuery)
     print(file + " marked as processed")
 
-    # process file
+    # get list of existing stories and histories
+    processedStories = dbscripts.db_query(database, "SELECT id FROM stories")
+    processedHistories = dbscripts.db_query(database, "SELECT story_id, date_transaction FROM history")
+
+    # process XLS
     sheet = xlrd.open_workbook(config.files_dir+file).sheet_by_index(0)
     for row in range(3, sheet.nrows):
         userID = sheet.cell_value(row, 0)
@@ -93,11 +96,14 @@ for file in listdir(config.files_dir):
         else:
             print("Skipping story " + str(storyId))
 
-        insertHistoryQuery = f"""INSERT INTO history 
+        if not [item for item in processedHistories if (int(storyId), file[23:-4]) in item]:
+            insertHistoryQuery = f"""INSERT INTO history 
         (story_id, status, date_transaction, date_next_payment, remaining_installments, current_installments, original_investment, principal_investment, principal_paid, principal_remaining, principal_sold, principal_late, principal_sell_fee, interest_expected, interest_paid, interest_remaining, interest_late, postponed, penalty ) 
         VALUES ({storyId},"{status}", "{file[23:-4]}", "{dateNextPayment}", {remainingInstallments}, {currentInstallments}, {originalInvestment}, {principalInvestment}, {principalPaid}, {principalRemaining}, {principalSold},{principalLate},{principalSellFee},{interestExpected}, {interestPaid}, {interestRemaining}, {interestLate}, {postponed}, {penalty})"""
-        dbscripts.db_query(database, insertHistoryQuery)
-        print("Adding history for story " + str(storyId))
+            dbscripts.db_query(database, insertHistoryQuery)
+            print("Adding history for story " + str(storyId))
+        else:
+            print("Skipping history for story " + str(storyId))
 
 database.close()
 

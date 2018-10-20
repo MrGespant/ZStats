@@ -33,9 +33,15 @@
     <connection id="fb129aa8-d100-4689-abc7-38275672e9ee">
       <console name="ZStats database" type="STANDARD"><![CDATA[SELECT * FROM files ORDER BY date_processed ASC
 
+SELECT filename FROM files
+
 SELECT * FROM stories
 
-DELETE FROM stories]]></console>
+SELECT * FROM history
+
+DELETE FROM stories
+DELETE FROM files
+DELETE FROM history]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">

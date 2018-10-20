@@ -4,14 +4,6 @@ import sqlite3
 from sqlite3.dbapi2 import Connection
 from resources.secrets import config
 
-
-insert = """INSERT INTO stories (
-    id, user_id, name, status, date_start, date_next_payment, date_secondary_bought, date_secondary_sold_date, amount, full_payment, my_payment, installments, installments_when_bought, insurance, postponed, interest_rate, fee, rating
-) VALUES (
-    2,2,'try','start',NULL,'2018-05-13', NULL, NULL, 10000, 2300, 13.5, 5, NULL, 1, 0, 5.86, 2, 'A++'  
-)"""
-
-
 def db_init():
     #
     # initialize the connection to DB
@@ -55,7 +47,7 @@ def db_query(db, script):
 
     for command in commands:
         try:
-            db.cursor().execute(command)
+            results = db.cursor().execute(command).fetchall()
         except Exception as e:
             raise e
 
@@ -66,7 +58,7 @@ def db_query(db, script):
         db.rollback()
         print("Script rolled back")
         raise e
-
+    return results
 
 def db_create():
     database = db_init()

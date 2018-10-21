@@ -96,7 +96,7 @@ for file in listdir(config.files_dir):
         else:
             print("Skipping story " + str(storyId))
 
-        if not [item for item in processedHistories if (int(storyId), file[23:-4]) in item]:
+        if type(processedHistories.index((int(storyId), file[23:-4]))) != int:
             insertHistoryQuery = f"""INSERT INTO history 
         (story_id, status, date_transaction, date_next_payment, remaining_installments, current_installments, original_investment, principal_investment, principal_paid, principal_remaining, principal_sold, principal_late, principal_sell_fee, interest_expected, interest_paid, interest_remaining, interest_late, postponed, penalty ) 
         VALUES ({storyId},"{status}", "{file[23:-4]}", "{dateNextPayment}", {remainingInstallments}, {currentInstallments}, {originalInvestment}, {principalInvestment}, {principalPaid}, {principalRemaining}, {principalSold},{principalLate},{principalSellFee},{interestExpected}, {interestPaid}, {interestRemaining}, {interestLate}, {postponed}, {penalty})"""

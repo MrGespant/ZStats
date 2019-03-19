@@ -8,7 +8,9 @@ from resources.secrets import config
 from os import listdir
 
 database = dbscripts.db_init()
-processedFiles = dbscripts.db_query(database, "SELECT filename FROM files")
+
+# failed are those that was corrupted or not valid
+processedFiles = dbscripts.db_query(database, "SELECT filename FROM export WHERE status <> 'failed'")
 
 
 for file in listdir(config.files_dir):

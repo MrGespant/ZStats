@@ -13,10 +13,10 @@ def db_init():
     try:
         db: Connection = sqlite3.connect(config.db_database_location, timeout=10)
     except Exception as e:
-        print("DB not connected")
+        config.logger.error("Can't connect to DB")
         raise e
 
-    print("DB connection established")
+    config.logger.info("DB connection established")
     return db
 
 
@@ -31,10 +31,10 @@ def db_script_open(script_file):
         script = fd.read()
         fd.close()
     except Exception as e:
-        print("Script from file " + script_file + " not loaded")
+        config.logger.error("Script from file " + script_file + " not loaded")
         raise e
 
-    print("Script from file " + script_file + " loaded")
+    config.logger.info("Script from file " + script_file + " loaded")
     return script
 
 
@@ -49,13 +49,14 @@ def db_query(db, script):
         try:
             results = db.cursor().execute(command).fetchall()
         except Exception as e:
+            config.logger.error("SQL command can not be executed: "+ command)
             raise e
 
     try:
         db.commit()
     except Exception as e:
         db.rollback()
-        print("Script " + command + "rolled back")
+        config.logger.info("Script " + command + "rolled back")
         raise e
     return results
 

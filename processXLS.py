@@ -13,12 +13,12 @@ database = dbscripts.db_init()
 processedFiles = dbscripts.db_query(database, "SELECT filename FROM export WHERE status <> 'failed'")
 
 
-for file in listdir(config.files_dir):
+for file in listdir(config.FILES_DIR):
     # check if the file is not processed already
     if [item for item in processedFiles if file in item]:
-        print(file + " already there")
+        config.logger.warning(file + " already there")
         continue
-    print("processing file " + file)
+    config.logger.info("processing file " + file)
 
     # mark that this file was processed
     insertFileQuery = f"""INSERT INTO files (filename, date_processed) 

@@ -50,13 +50,15 @@ def db_query(db, script):
         except Exception as e:
             config.logger.error("SQL command can not be executed: " + command)
             raise e
+        config.logger.info("Command executed: " + command)
 
     try:
         db.commit()
     except Exception as e:
         db.rollback()
-        config.logger.info("Script " + command + "rolled back")
+        config.logger.info("Command " + command + "rolled back")
         raise e
+
     return results
 
 def db_create():

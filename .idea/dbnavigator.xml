@@ -23,7 +23,11 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="fb129aa8-d100-4689-abc7-38275672e9ee">
+        <schema name="main" object-types="column, constraint, index, table, dataset trigger, view" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="fb129aa8-d100-4689-abc7-38275672e9ee">
@@ -88,7 +92,7 @@ DELETE FROM history]]></console>
           <port value="" />
           <database value="" />
           <files>
-            <file path="G:\Můj disk\PyCharm Projects\ZStats\resources\secrets\data.db" schema="main" />
+            <file path="C:\Users\tomas\Documents\PyCharm Projects\ZStats\resources\secrets\data.db" schema="main" />
           </files>
           <os-authentication value="false" />
           <empty-password value="false" />

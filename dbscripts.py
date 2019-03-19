@@ -11,7 +11,7 @@ def db_init():
     #
 
     try:
-        db: Connection = sqlite3.connect(config.db_database_location, timeout=10)
+        db: Connection = sqlite3.connect(config.DB_DATABASE_LOCATION, timeout=10)
     except Exception as e:
         config.logger.error("Can't connect to DB")
         raise e
@@ -42,14 +42,13 @@ def db_query(db, script):
     #
     # runs the queries in "script" on database "db"
     #
-
     commands = script.split(';')
 
     for command in commands:
         try:
             results = db.cursor().execute(command).fetchall()
         except Exception as e:
-            config.logger.error("SQL command can not be executed: "+ command)
+            config.logger.error("SQL command can not be executed: " + command)
             raise e
 
     try:
@@ -62,5 +61,7 @@ def db_query(db, script):
 
 def db_create():
     database = db_init()
-    db_query(database, db_script_open(config.db_create_script))
+    db_query(database, db_script_open(config.DB_CREATE_SCRIPT))
     database.close()
+
+db_create()

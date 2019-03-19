@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS status(
     interest_due float,
     penalty float,
     current_installments integer,
-    next_installment_date text NULL,
+    next_installment_date text NULL
 );
 CREATE TABLE IF NOT EXISTS export(
     id integer PRIMARY KEY,

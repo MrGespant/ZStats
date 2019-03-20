@@ -4,7 +4,7 @@
 
 import xlrd
 import dbscripts
-from resources.secrets import config
+from resources import config
 from os import listdir
 
 database = dbscripts.db_init()
@@ -31,7 +31,7 @@ for file in listdir(config.FILES_DIR):
     processedHistories = dbscripts.db_query(database, "SELECT story_id, date_transaction FROM history")
 
     # process XLS
-    sheet = xlrd.open_workbook(config.files_dir+file).sheet_by_index(0)
+    sheet = xlrd.open_workbook(config.files_dir + file).sheet_by_index(0)
     for row in range(3, sheet.nrows):
         userID = sheet.cell_value(row, 0)
         name = sheet.cell_value(row, 1).replace('"', '')

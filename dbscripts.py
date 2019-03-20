@@ -2,7 +2,8 @@
 
 import sqlite3
 from sqlite3.dbapi2 import Connection
-from resources.secrets import config
+from resources import config
+
 
 def db_init():
     #

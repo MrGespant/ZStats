@@ -4,6 +4,7 @@
 
 import xlrd
 import dbscripts
+import validateXLS
 from resources import config
 from os import listdir
 
@@ -12,12 +13,17 @@ database = dbscripts.db_init()
 # failed are those that was corrupted or not valid
 processedFiles = dbscripts.db_query(database, "SELECT filename FROM export WHERE status <> 'failed'")
 
-
 for file in listdir(config.FILES_DIR):
     # check if the file is not processed already
     if [item for item in processedFiles if file in item]:
         config.logger.warning(file + " already there")
         continue
+    # validate the file
+    config.logger.info("validating file " + file)
+
+    if not validateXLS.validate(file):
+        continue
+
     config.logger.info("processing file " + file)
 
     # mark that this file was processed
@@ -31,7 +37,7 @@ for file in listdir(config.FILES_DIR):
     processedHistories = dbscripts.db_query(database, "SELECT story_id, date_transaction FROM history")
 
     # process XLS
-    sheet = xlrd.open_workbook(config.files_dir + file).sheet_by_index(0)
+    sheet = xlrd.open_workbook(config.FILES_DIR + file).sheet_by_index(0)
     for row in range(3, sheet.nrows):
         userID = sheet.cell_value(row, 0)
         name = sheet.cell_value(row, 1).replace('"', '')
